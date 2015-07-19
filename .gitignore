@@ -1,3 +1,5 @@
 # Covers JetBrains IDEs
 *.iml
 .idea/
+
+typings/
