@@ -1,0 +1,65 @@
+<html>
+<head>
+  <title>My first Three.js app</title>
+  <style>
+    body {
+      margin: 0;
+    }
+    canvas {
+      width: 100%;
+      height: 100%
+    }
+  </style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js">
+</script>
+<script>
+  var scene, camera, renderer;
+  var geometry, material, mesh;
+  var ambientLight, directionalLight;
+
+  init();
+  animate();
+
+  function init() {
+    scene = new THREE.Scene();
+
+    ambientLight = new THREE.AmbientLight(0x999999);
+    scene.add(ambientLight);
+
+    directionalLight = new THREE.DirectionalLight(0xaaaaaa, 0.8);
+    directionalLight.position.set(1, 1, 2);
+    scene.add(directionalLight);
+
+    geometry = new THREE.SphereGeometry(200, 24, 24);
+    material = new THREE.MeshPhongMaterial({color: 0xff0000, specular: 0x666666});
+    mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    camera = new THREE.PerspectiveCamera(75,
+      window.innerWidth / window.innerHeight, 1, 10000);
+    camera.position.z = 1000;
+
+    renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(new THREE.Color(0xffffff));
+
+    document.body.appendChild(renderer.domElement);
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    mesh.rotation.x += 0.01;
+    mesh.rotation.y += 0.02;
+
+    //スクリーンショット用
+    //mesh.rotation.x = 0.5;
+    //mesh.rotation.y = 0.5;
+
+    renderer.render(scene, camera);
+  }
+</script>
+</body>
+</html>
